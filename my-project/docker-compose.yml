@@ -1,0 +1,17 @@
+version: '3'
+services:
+  fuseki:
+    build: ./fuseki
+    volumes:
+      - fuseki-data:/fuseki/data
+    ports:
+      - "3030:3030"
+
+  sparklis:
+    build: ./sparklis
+    ports:
+      - "80:80"
+      
+
+volumes:
+  fuseki-data:
