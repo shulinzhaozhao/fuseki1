@@ -17,24 +17,27 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
   
 - Create a Resource Group: Azure uses Resource Groups to manage resources. Create one with
   
-  az group create --name Group --location eastus
-
-  myResourceGroup = Group
+  az group create --name myResourceGroup --location australiaeast
   
-  Replace eastus with your preferred location.
+  example: az group create --name lilianGroup --location australiaeast
+  
+  Replace australiaeast with your preferred location and myResourceGroup.
   
 - Create an Azure Container Registry (ACR):
   
-  az acr create --resource-group Group --name shulinzhaoregistry --sku Basic
-
-  myResourceGroup = Group
-  myregistry = shulinzhaoregistry 
+  az acr create --resource-group myResourceGroup --name myregistry --sku Basic
   
-  Replace myRegistry with a unique name for your ACR.
+  example: az acr create --resource-group lilianGroup --name lilianregistry --sku Basic
+  
+  Replace myRegistry with a unique name for your ACR and myResourceGroup with the name you created previously.
 
-- Login to ACR: az acr login --name myregistry
+- Login to ACR:
 
-  myregistry = shulinzhaoregistry
+  az acr login --name myregistry
+
+  example: az acr login --name lilianregistry
+
+  Replace myregistry with the name you created previously.
 
 - Build and Push Images to ACR:
   
@@ -48,11 +51,19 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
   
   docker push myregistry.azurecr.io/my-sparklis:v1
 
-  my-fuseki = my-project-fuseki
+  example:
 
-  my-sparklis = my-project-sparklis
+  docker tag my-project-fuseki lilianregistry.azurecr.io/my-project-fuseki:v1
   
-  Note: You need to build your Docker images with the docker build command if you haven't already done so. my-fuseki and my-    sparklis are the image name in docker.
+  docker tag my-project-sparklis lilianregistry.azurecr.io/my-project-sparklis:v1
+  
+  docker push lilianregistry.azurecr.io/my-project-fuseki:v1
+  
+  docker push lilianregistry.azurecr.io/my-project-sparklis:v1
+  
+  Note: You need to build your Docker images with the docker build command if you haven't already done so. my-fuseki and my-sparklis are the image name in docker.
+
+- 
   
 - Deploy to Azure Container Instances (ACI):
   
