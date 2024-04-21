@@ -19,7 +19,7 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
   
   az group create --name myResourceGroup --location australiaeast
   
-  example: az group create --name lilianGroup --location australiaeast
+  example: az group create --name shulinGroup --location australiaeast
   
   Replace australiaeast with your preferred location and myResourceGroup.
   
@@ -27,7 +27,7 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
   
   az acr create --resource-group myResourceGroup --name myregistry --sku Basic
   
-  example: az acr create --resource-group lilianGroup --name lilianregistry --sku Basic
+  example: az acr create --resource-group shulinGroup --name shulinregistry --sku Basic
   
   Replace myRegistry with a unique name for your ACR and myResourceGroup with the name you created previously.
 
@@ -35,7 +35,7 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
 
   az acr login --name myregistry
 
-  example: az acr login --name lilianregistry
+  example: az acr login --name shulinregistry
 
   Replace myregistry with the name you created previously.
 
@@ -53,17 +53,41 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
 
   example:
 
-  docker tag my-project-fuseki lilianregistry.azurecr.io/my-project-fuseki:v1
+  docker tag my-project-fuseki shulinregistry.azurecr.io/my-project-fuseki:v1
   
-  docker tag my-project-sparklis lilianregistry.azurecr.io/my-project-sparklis:v1
+  docker tag my-project-sparklis shulinregistry.azurecr.io/my-project-sparklis:v1
   
-  docker push lilianregistry.azurecr.io/my-project-fuseki:v1
+  docker push shulinregistry.azurecr.io/my-project-fuseki:v1
   
-  docker push lilianregistry.azurecr.io/my-project-sparklis:v1
+  docker push shulinregistry.azurecr.io/my-project-sparklis:v1
   
   Note: You need to build your Docker images with the docker build command if you haven't already done so. my-fuseki and my-sparklis are the image name in docker.
 
-- 
+- The Azure Portal provides a user-friendly interface to manage all Azure resources. Here’s how to create an Azure File Share using the Azure Portal:
+
+  Log in to the Azure Portal: Go to https://portal.azure.com and log in with your credentials.
+
+  Navigate to Storage Accounts: Click on "Storage accounts" from the resources list or search for it in the portal search bar.
+
+  Create a Storage Account (if you don’t have one):
+
+  Click on "Create" or "+ Add".
+  
+  Fill in the required fields like subscription, resource group, storage account name, location, and performance (Standard or Premium).
+
+  Select "Standard_LRS" for the replication as you intended earlier.
+
+  Review and create the storage account.
+
+  <img width="907" alt="截屏2024-04-21 13 03 35" src="https://github.com/shulinzhaozhao/fuseki1/assets/125878823/2e51395b-9de6-447e-a8a8-32b8854e44de">
+
+  Create a File Share:
+
+Once your storage account is created and listed, click on it to open the storage account overview.
+Under the "Data storage" section, click on "File shares".
+Click "+ File share" to create a new file share.
+Name your file share and define the quota (if applicable).
+Click "Create" to provision the file share.
   
 - Deploy to Azure Container Instances (ACI):
   
