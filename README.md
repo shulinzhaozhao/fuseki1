@@ -83,39 +83,91 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
 
   Create a File Share:
 
-Once your storage account is created and listed, click on it to open the storage account overview.
-Under the "Data storage" section, click on "File shares".
-Click "+ File share" to create a new file share.
-Name your file share and define the quota (if applicable).
-Click "Create" to provision the file share.
+  Once your storage account is created and listed, click on it to open the storage account overview.
+
+  Under the "Data storage" section, click on "File shares".
+
+  Click "+ File share" to create a new file share.
+
+  Name your file share and define the quota (if applicable).
+
+  Click "Create" to provision the file share.
   
+  <img width="910" alt="截屏2024-04-21 13 05 54" src="https://github.com/shulinzhaozhao/fuseki1/assets/125878823/aff2d599-bc1c-478e-a401-98a29d58d130">
+
 - Deploy to Azure Container Instances (ACI):
   
   You'll deploy each image as a separate container. Here's how you deploy Fuseki:
   
-  az container create \
-      --resource-group myResourceGroup \
-      --name my-fuseki \ 
-      --image myRegistry.azurecr.io/my-fuseki:v1 \ 
-      --cpu 1 --memory 1 \  
-      --registry-login-server myRegistry.azurecr.io \
-      --registry-username <acr-username> \
-      --registry-password <acr-password> \
-      --dns-name-label my-fuseki-app \
-      --ports 3030
- - And Sparklis:
-   az container create \
-      --resource-group myResourceGroup \
-      --name my-sparklis \
-      --image myRegistry.azurecr.io/my-sparklis:v1 \
+    az container create \
+        --resource-group Group \
+        --name my-fuseki \
+        --image shulinzhaoregistry.azurecr.io/fuseki:v1 \
+        --cpu 1 --memory 1 \
+        --registry-login-server shulinzhaoregistry.azurecr.io \
+        --registry-username <acr-username> \
+        --registry-password <acr-password> \
+        --dns-name-label my-fuseki-app-unique2024 \
+        --ports 3030 \
+        --azure-file-volume-account-name mystorageaccount \
+        --azure-file-volume-account-key <storage-account-key> \
+        --azure-file-volume-share-name myshare \
+        --azure-file-volume-mount-path /path/in/container
+    
+  example:
+
+    az container create \
+      --resource-group shulinGroup \
+      --name my-fuseki \
+      --image shulinregistry.azurecr.io/my-project-fuseki:v1 \
       --cpu 1 --memory 1 \
-      --registry-login-server myRegistry.azurecr.io \
+      --registry-login-server shulinregistry.azurecr.io \
+      --registry-username shulinregistry \
+      --registry-password oga7EjJEKBp/VDvfcas+3TqDXsflO7nVg8pPJBeAiu+ACRAH41lb \
+      --dns-name-label my-fuseki-app-unique2024-shulinproject \
+      --ports 3030 \
+      --azure-file-volume-account-name shulinstorage \
+      --azure-file-volume-account-key qSljlREr6qTd7ccIIfc9AaDfT4Rf0PmylUuZpUGB+tfFjS2SdyQX4quC/2s2K/3rjftBWZGKVBqv+AStS2Rozw== \
+      --azure-file-volume-share-name shulinshare \
+      --azure-file-volume-mount-path /fuseki/data
+
+   And Sparklis:
+   
+     az container create \
+      --resource-group Group \
+      --name my-sparklis \
+      --image shulinzhaoregistry.azurecr.io/sparklis:v1 \
+      --cpu 1 --memory 1 \
+      --registry-login-server shulinzhaoregistry.azurecr.io \
       --registry-username <acr-username> \
       --registry-password <acr-password> \
-      --dns-name-label my-sparklis-app \
-      --ports 80
+      --dns-name-label my-sparklis-app-unique2024 \
+      --ports 80 \
+      --azure-file-volume-account-name mystorageaccount \
+      --azure-file-volume-account-key <storage-account-key> \
+      --azure-file-volume-share-name myshare \
+      --azure-file-volume-mount-path /path/in/container
+
+    example:
+
+       az container create \
+        --resource-group shulinGroup \
+        --name my-sparklis \
+        --image shulinregistry.azurecr.io/my-project-sparklis:v1 \
+        --cpu 1 --memory 1 \
+        --registry-login-server shulinregistry.azurecr.io \
+        --registry-username shulinregistry \
+        --registry-password oga7EjJEKBp/VDvfcas+3TqDXsflO7nVg8pPJBeAiu+ACRAH41lb \
+        --dns-name-label my-sparklis-app-unique2024-shulinproject \
+        --ports 80 \
+        --azure-file-volume-account-name shulinstorage \
+        --azure-file-volume-account-key qSljlREr6qTd7ccIIfc9AaDfT4Rf0PmylUuZpUGB+tfFjS2SdyQX4quC/2s2K/3rjftBWZGKVBqv+AStS2Rozw== \
+        --azure-file-volume-share-name shulinshare \
+        --azure-file-volume-mount-path /var/www/sparklis/webapp
+
 
   The --dns-name-label must be unique within the Azure region.
+  
   ACR Credentials
   
   For ACR, you will need the username and password. You can enable the admin user on your ACR to get these credentials.
@@ -137,11 +189,13 @@ Click "Create" to provision the file share.
   For the storage account key, follow these steps:
   
   Navigate to Your Storage Account:
+  
   Go to the Azure Portal.
   
-  Open the storage account you created (in your case, zhaoshulinstorage)
+  Open the storage account you created (in your case, shulinstorage)
   
   Access Keys:
+  
   In the storage account's menu pane, under "Security + networking", find and select "Access keys".
   
   Here, you'll find two access keys. You can use either "key1" or "key2".
@@ -149,6 +203,6 @@ Click "Create" to provision the file share.
   Click "Show keys", and then click the "Copy" button next to the key you wish to use.
 
 **3.	Now that you have both the Fuseki and Sparklis containers running in Azure Container Instances (ACI) and they are publicly accessible.**
-- Link for Fuseki: my-fuseki-app.eastus.azurecontainer.io:3030
-- Link for sparklis: my-sparklis-app.eastus.azurecontainer.io
-- Endpoint link is http://my-fuseki-app.eastus.azurecontainer.io:3030/pizza/sparql, which need to place in the sparklis. We can replace "pizza" in this link with the database name we uploaded in Fuseli.
+- Link for Fuseki: my-fuseki-app-unique2024-shulinproject.australiaeast.azurecontainer.io:3030
+- Link for sparklis: my-sparklis-app-unique2024-shulinproject.australiaeast.azurecontainer.io:80
+- Endpoint link is http://my-fuseki-app-unique2024-shulinproject.australiaeast.azurecontainer.io:3030/pizza/sparql, which need to place in the sparklis. We can replace "pizza" in this link with the database name we uploaded in Fuseli.
