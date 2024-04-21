@@ -12,14 +12,14 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
 - Use this project file to open a terminal and run: docker-compose up
 
 - Login to Azure CLI: Open a terminal and run: az login
-- 
-  This will open a browser window where you can log in with your Azure credentials.
+
+- This will open a browser window where you can log in with your Azure credentials.
   
 - Create a Resource Group: Azure uses Resource Groups to manage resources. Create one with
   
   az group create --name myResourceGroup --location australiaeast
   
-  example: az group create --name shulinGroup --location australiaeast
+  example: az group create --name testGroup --location australiaeast
   
   Replace australiaeast with your preferred location and myResourceGroup.
   
@@ -27,7 +27,7 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
   
   az acr create --resource-group myResourceGroup --name myregistry --sku Basic
   
-  example: az acr create --resource-group shulinGroup --name shulinregistry --sku Basic
+  example: az acr create --resource-group testGroup --name shulintestregistry --sku Basic
   
   Replace myRegistry with a unique name for your ACR and myResourceGroup with the name you created previously.
 
@@ -35,7 +35,7 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
 
   az acr login --name myregistry
 
-  example: az acr login --name shulinregistry
+  example: az acr login --name shulintestregistry
 
   Replace myregistry with the name you created previously.
 
@@ -53,13 +53,13 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
 
   example:
 
-  docker tag my-project-fuseki shulinregistry.azurecr.io/my-project-fuseki:v1
+  docker tag my-project-fuseki shulintestregistry.azurecr.io/my-project-fuseki:v1
   
-  docker tag my-project-sparklis shulinregistry.azurecr.io/my-project-sparklis:v1
+  docker tag my-project-sparklis shulintestregistry.azurecr.io/my-project-sparklis:v1
   
-  docker push shulinregistry.azurecr.io/my-project-fuseki:v1
+  docker push shulintestregistry.azurecr.io/my-project-fuseki:v1
   
-  docker push shulinregistry.azurecr.io/my-project-sparklis:v1
+  docker push shulintestregistry.azurecr.io/my-project-sparklis:v1
   
   Note: You need to build your Docker images with the docker build command if you haven't already done so. my-fuseki and my-sparklis are the image name in docker.
 
@@ -79,8 +79,6 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
 
   Review and create the storage account.
 
-  <img width="907" alt="截屏2024-04-21 13 03 35" src="https://github.com/shulinzhaozhao/fuseki1/assets/125878823/2e51395b-9de6-447e-a8a8-32b8854e44de">
-
   Create a File Share:
 
   Once your storage account is created and listed, click on it to open the storage account overview.
@@ -92,8 +90,6 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
   Name your file share and define the quota (if applicable).
 
   Click "Create" to provision the file share.
-  
-  <img width="910" alt="截屏2024-04-21 13 05 54" src="https://github.com/shulinzhaozhao/fuseki1/assets/125878823/aff2d599-bc1c-478e-a401-98a29d58d130">
 
 - Deploy to Azure Container Instances (ACI):
   
@@ -101,7 +97,7 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
   
     az container create \
         --resource-group Group \
-        --name my-fuseki \
+        --name fuseki \
         --image shulinzhaoregistry.azurecr.io/fuseki:v1 \
         --cpu 1 --memory 1 \
         --registry-login-server shulinzhaoregistry.azurecr.io \
@@ -117,18 +113,18 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
   example:
 
     az container create \
-      --resource-group shulinGroup \
-      --name my-fuseki \
-      --image shulinregistry.azurecr.io/my-project-fuseki:v1 \
+      --resource-group testGroup \
+      --name fuseki \
+      --image shulintestregistry.azurecr.io/my-project-fuseki:v1 \
       --cpu 1 --memory 1 \
-      --registry-login-server shulinregistry.azurecr.io \
-      --registry-username shulinregistry \
-      --registry-password oga7EjJEKBp/VDvfcas+3TqDXsflO7nVg8pPJBeAiu+ACRAH41lb \
-      --dns-name-label my-fuseki-app-unique2024-shulinproject \
+      --registry-login-server shulintestregistry.azurecr.io \
+      --registry-username shulintestregistry \
+      --registry-password vP3+0u8Rb8JS4ZJiQLopKM0s/9B+3lZwz0jKWJLQFB+ACRDxLlm6 \
+      --dns-name-label my-fuseki-app-unique2024-shulintestproject \
       --ports 3030 \
-      --azure-file-volume-account-name shulinstorage \
-      --azure-file-volume-account-key qSljlREr6qTd7ccIIfc9AaDfT4Rf0PmylUuZpUGB+tfFjS2SdyQX4quC/2s2K/3rjftBWZGKVBqv+AStS2Rozw== \
-      --azure-file-volume-share-name shulinshare \
+      --azure-file-volume-account-name shulinteststorage \
+      --azure-file-volume-account-key 8/vOJwg52XhelCRlL+yrp4KFM0yQ+MOhXtOG+/QynKY9ITVNf34aNL2aZt31YsZddedn6NKy29am+AStVyjL8Q== \
+      --azure-file-volume-share-name shulintestshare \
       --azure-file-volume-mount-path /fuseki/data
 
    And Sparklis:
@@ -151,18 +147,18 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
     example:
 
        az container create \
-        --resource-group shulinGroup \
-        --name my-sparklis \
-        --image shulinregistry.azurecr.io/my-project-sparklis:v1 \
+        --resource-group testGroup \
+        --name sparklis \
+        --image shulintestregistry.azurecr.io/my-project-sparklis:v1 \
         --cpu 1 --memory 1 \
-        --registry-login-server shulinregistry.azurecr.io \
-        --registry-username shulinregistry \
-        --registry-password oga7EjJEKBp/VDvfcas+3TqDXsflO7nVg8pPJBeAiu+ACRAH41lb \
-        --dns-name-label my-sparklis-app-unique2024-shulinproject \
+        --registry-login-server shulintestregistry.azurecr.io \
+        --registry-username shulintestregistry \
+        --registry-password vP3+0u8Rb8JS4ZJiQLopKM0s/9B+3lZwz0jKWJLQFB+ACRDxLlm6 \
+        --dns-name-label my-sparklis-app-unique2024-shulintestproject \
         --ports 80 \
-        --azure-file-volume-account-name shulinstorage \
-        --azure-file-volume-account-key qSljlREr6qTd7ccIIfc9AaDfT4Rf0PmylUuZpUGB+tfFjS2SdyQX4quC/2s2K/3rjftBWZGKVBqv+AStS2Rozw== \
-        --azure-file-volume-share-name shulinshare \
+        --azure-file-volume-account-name shulinteststorage \
+        --azure-file-volume-account-key 8/vOJwg52XhelCRlL+yrp4KFM0yQ+MOhXtOG+/QynKY9ITVNf34aNL2aZt31YsZddedn6NKy29am+AStVyjL8Q== \
+        --azure-file-volume-share-name shulintestshare \
         --azure-file-volume-mount-path /var/www/sparklis/webapp
 
 
@@ -203,6 +199,6 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
   Click "Show keys", and then click the "Copy" button next to the key you wish to use.
 
 **3.	Now that you have both the Fuseki and Sparklis containers running in Azure Container Instances (ACI) and they are publicly accessible.**
-- Link for Fuseki: my-fuseki-app-unique2024-shulinproject.australiaeast.azurecontainer.io:3030
-- Link for sparklis: my-sparklis-app-unique2024-shulinproject.australiaeast.azurecontainer.io:80
-- Endpoint link is http://my-fuseki-app-unique2024-shulinproject.australiaeast.azurecontainer.io:3030/pizza/sparql, which need to place in the sparklis. We can replace "pizza" in this link with the database name we uploaded in Fuseli.
+- Link for Fuseki: my-fuseki-app-unique2024-shulintestproject.australiaeast.azurecontainer.io:3030
+- Link for sparklis: my-sparklis-app-unique2024-shulintestproject.australiaeast.azurecontainer.io:80
+- Endpoint link is http://my-fuseki-app-unique2024-shulintestproject.australiaeast.azurecontainer.io:3030/test2/sparql, which need to place in the sparklis. We can replace "pizza" in this link with the database name we uploaded in Fuseli.
