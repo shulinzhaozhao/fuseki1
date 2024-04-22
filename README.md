@@ -201,4 +201,4 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
 **3.	Now that you have both the Fuseki and Sparklis containers running in Azure Container Instances (ACI) and they are publicly accessible.**
 - Link for Fuseki: my-fuseki-app-unique2024-shulintestproject.australiaeast.azurecontainer.io:3030
 - Link for sparklis: my-sparklis-app-unique2024-shulintestproject.australiaeast.azurecontainer.io:80
-- Endpoint link is http://my-fuseki-app-unique2024-shulintestproject.australiaeast.azurecontainer.io:3030/test2/sparql, which need to place in the sparklis. We can replace "pizza" in this link with the database name we uploaded in Fuseli.
+- Endpoint link is http://my-fuseki-app-unique2024-shulintestproject.australiaeast.azurecontainer.io:3030/pizza/sparql, which need to place in the sparklis. We can replace "pizza" in this link with the database name we uploaded in Fuseli.
