@@ -119,7 +119,7 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
       --cpu 1 --memory 1 \
       --registry-login-server shulinprojectregistry.azurecr.io \
       --registry-username shulinprojectregistry \
-      --registry-password PoZMnz7t67LUrlymYiir34MNgsY3b8tYZpMutwNRed+ACRBusvSb \
+      --registry-password 16VQ8vWgw8CBivgn9QY8F/ndwTWnYIQWh6mbb9/NWR+ACRAG3opX \
       --dns-name-label my-fuseki-app-2024-shulinproject \
       --ports 3030 \
       --azure-file-volume-account-name shulinstorage \
@@ -153,7 +153,7 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
         --cpu 1 --memory 1 \
         --registry-login-server shulinprojectregistry.azurecr.io \
         --registry-username shulinprojectregistry \
-        --registry-password PoZMnz7t67LUrlymYiir34MNgsY3b8tYZpMutwNRed+ACRBusvSb \
+        --registry-password 16VQ8vWgw8CBivgn9QY8F/ndwTWnYIQWh6mbb9/NWR+ACRAG3opX \
         --dns-name-label my-sparklis-app-2024-shulinproject \
         --ports 80 \
         --azure-file-volume-account-name shulinstorage \
