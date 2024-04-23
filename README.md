@@ -119,12 +119,12 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
       --cpu 1 --memory 1 \
       --registry-login-server shulinprojectregistry.azurecr.io \
       --registry-username shulinprojectregistry \
-      --registry-password 2scRovpiJEsquY3lphhVmppRsr3dlnG1vUB4LNfl2s+ACRAxsjTn \
-      --dns-name-label my-fuseki-app-unique2024-shulinproject \
+      --registry-password PoZMnz7t67LUrlymYiir34MNgsY3b8tYZpMutwNRed+ACRBusvSb \
+      --dns-name-label my-fuseki-app-2024-shulinproject \
       --ports 3030 \
-      --azure-file-volume-account-name shulinprojectstorage \
-      --azure-file-volume-account-key 3uO1sZCnpyqbDF3OU98lTV8hUz80UknNACS5lbxZB2hjBa5XvskZusyt3aTA9iTHtTC7mvo0PD53+AStU7UfNw== \
-      --azure-file-volume-share-name projectsharefile \
+      --azure-file-volume-account-name shulinstorage \
+      --azure-file-volume-account-key c95pHQiCMP9AgJuXg4HGxix81pRtl8lFp9YZbZxtiDvghrFNaccWAx4urD3EiFYzhCW+uKoTzFb9+AStjzXdoA== \
+      --azure-file-volume-share-name shulinshare \
       --azure-file-volume-mount-path /fuseki
 
    And Sparklis:
@@ -153,12 +153,12 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
         --cpu 1 --memory 1 \
         --registry-login-server shulinprojectregistry.azurecr.io \
         --registry-username shulinprojectregistry \
-        --registry-password 2scRovpiJEsquY3lphhVmppRsr3dlnG1vUB4LNfl2s+ACRAxsjTn \
-        --dns-name-label my-sparklis-app-unique2024-shulinproject \
+        --registry-password PoZMnz7t67LUrlymYiir34MNgsY3b8tYZpMutwNRed+ACRBusvSb \
+        --dns-name-label my-sparklis-app-2024-shulinproject \
         --ports 80 \
-        --azure-file-volume-account-name shulinprojectstorage \
-        --azure-file-volume-account-key 3uO1sZCnpyqbDF3OU98lTV8hUz80UknNACS5lbxZB2hjBa5XvskZusyt3aTA9iTHtTC7mvo0PD53+AStU7UfNw== \
-        --azure-file-volume-share-name projectsharefile \
+        --azure-file-volume-account-name shulinstorage \
+        --azure-file-volume-account-key c95pHQiCMP9AgJuXg4HGxix81pRtl8lFp9YZbZxtiDvghrFNaccWAx4urD3EiFYzhCW+uKoTzFb9+AStjzXdoA== \
+        --azure-file-volume-share-name shulinshare \
         --azure-file-volume-mount-path /var/www/sparklis/webapp
 
 
@@ -199,6 +199,6 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
   Click "Show keys", and then click the "Copy" button next to the key you wish to use.
 
 **3.	Now that you have both the Fuseki and Sparklis containers running in Azure Container Instances (ACI) and they are publicly accessible.**
-- Link for Fuseki: my-fuseki-app-unique2024-shulinproject.australiaeast.azurecontainer.io:3030
-- Link for sparklis: my-sparklis-app-unique2024-shulinproject.australiaeast.azurecontainer.io:80
-- Endpoint link is http://my-fuseki-app-unique2024-shulinproject.australiaeast.azurecontainer.io:3030/pizza/sparql, which need to place in the sparklis. We can replace "pizza" in this link with the database name we uploaded in Fuseli.
+- Link for Fuseki: my-fuseki-app-2024-shulinproject.australiaeast.azurecontainer.io:3030
+- Link for sparklis: my-sparklis-app-2024-shulinproject.australiaeast.azurecontainer.io:80
+- Endpoint link is http://my-fuseki-app-2024-shulinproject.australiaeast.azurecontainer.io:3030/pizza/sparql, which need to place in the sparklis. We can replace "pizza" in this link with the database name we uploaded in Fuseli.
