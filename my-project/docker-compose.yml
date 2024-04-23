@@ -3,9 +3,9 @@ services:
   fuseki:
     build: ./fuseki
     volumes:
-      - fuseki-data:/fuseki/data
+    - fuseki-data:/fuseki/data
     ports:
-      - "3030:3030"
+    - "3030:3030"
 
   sparklis:
     build: ./sparklis
