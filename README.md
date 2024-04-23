@@ -119,7 +119,7 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
       --cpu 1 --memory 1 \
       --registry-login-server shulinprojectregistry.azurecr.io \
       --registry-username shulinprojectregistry \
-      --registry-password 16VQ8vWgw8CBivgn9QY8F/ndwTWnYIQWh6mbb9/NWR+ACRAG3opX \
+      --registry-password UJSy7R2e1pTUYMRKsvwUblzirEDrX8RurWqnz2EV+5+ACRAj+QAz \
       --dns-name-label my-fuseki-app-2024-shulinproject \
       --ports 3030 \
       --azure-file-volume-account-name shulinstorage \
@@ -153,7 +153,7 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
         --cpu 1 --memory 1 \
         --registry-login-server shulinprojectregistry.azurecr.io \
         --registry-username shulinprojectregistry \
-        --registry-password 16VQ8vWgw8CBivgn9QY8F/ndwTWnYIQWh6mbb9/NWR+ACRAG3opX \
+        --registry-password UJSy7R2e1pTUYMRKsvwUblzirEDrX8RurWqnz2EV+5+ACRAj+QAz \
         --dns-name-label my-sparklis-app-2024-shulinproject \
         --ports 80 \
         --azure-file-volume-account-name shulinstorage \
@@ -200,5 +200,8 @@ Deployment Guide for Sparklis and Fuseki on Azure using Docker
 
 **3.	Now that you have both the Fuseki and Sparklis containers running in Azure Container Instances (ACI) and they are publicly accessible.**
 - Link for Fuseki: my-fuseki-app-2024-shulinproject.australiaeast.azurecontainer.io:3030
+
+  username = admin  password = uFhbuTmbgl1apX4
+  
 - Link for sparklis: my-sparklis-app-2024-shulinproject.australiaeast.azurecontainer.io:80
 - Endpoint link is http://my-fuseki-app-2024-shulinproject.australiaeast.azurecontainer.io:3030/pizza/sparql, which need to place in the sparklis. We can replace "pizza" in this link with the database name we uploaded in Fuseli.
